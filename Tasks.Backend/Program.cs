@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Tasks.Backend.Data;
+using Tasks.Backend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddScoped<UserService>();
 
 
 var app = builder.Build();

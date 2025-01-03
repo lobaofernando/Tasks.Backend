@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Tasks.Backend.DTOs;
-using Tasks.Backend.Models;
 using Tasks.Backend.Services;
 
 namespace Tasks.Backend.Controllers
@@ -37,7 +36,7 @@ namespace Tasks.Backend.Controllers
 
         // POST: api/User
         [HttpPost]
-        public async Task<IActionResult> CreateUser([FromBody] User user)
+        public async Task<IActionResult> CreateUser([FromBody] CreateUserDTO user)
         {
             if (!ModelState.IsValid)
             {
@@ -55,12 +54,12 @@ namespace Tasks.Backend.Controllers
                 return StatusCode(500, new {message = "Erro na criação do usuário" });
             }
 
-            return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);
+            return CreatedAtAction(nameof(GetUserById), user);
         }
 
         // PUT: api/User/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(int id, [FromBody] User updatedUser)
+        public async Task<IActionResult> UpdateUser(int id, [FromBody] UserDTO updatedUser)
         {
             if (id != updatedUser.Id)
             {

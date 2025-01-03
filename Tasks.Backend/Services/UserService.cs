@@ -3,8 +3,6 @@ using Tasks.Backend.Models;
 using Tasks.Backend.DTOs;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using System.Runtime.Intrinsics.Arm;
-using Microsoft.VisualBasic;
 
 namespace Tasks.Backend.Services
 {
@@ -43,15 +41,15 @@ namespace Tasks.Backend.Services
             return true;
         }
 
-        public async Task<UserDTO> CreateUser(User user)
+        public async Task<UserDTO> CreateUser(CreateUserDTO user)
         {
-            _context.Users.Add(user);
+            _context.Users.Add(_mapper.Map<User>(user));
             await _context.SaveChangesAsync();
 
             return _mapper.Map<UserDTO>(user);
         }
 
-        public async Task<UserDTO> UpdateUser(int id, User updateUser)
+        public async Task<UserDTO?> UpdateUser(int id, UserDTO updateUser)
         {
             var user = await _context.Users.FindAsync(id);
             if (user == null)

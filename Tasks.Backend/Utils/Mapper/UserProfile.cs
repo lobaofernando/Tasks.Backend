@@ -11,6 +11,18 @@ namespace Tasks.Backend.Utils.Mapper
             CreateMap<User, UserDTO>();
 
             CreateMap<UserDTO, User>();
+            
+            CreateMap<CreateUserDTO, User>();
+
+            CreateMap<User, CreateUserDTO>();
+
+            CreateMap<CreateUserDTO, UserDTO>();
+
+            CreateMap<UserDTO, CreateUserDTO>();
+
+            CreateMap<UpdateUserDTO, User>();
+
+            CreateMap<User, UpdateUserDTO>();
         }
     }
 }
