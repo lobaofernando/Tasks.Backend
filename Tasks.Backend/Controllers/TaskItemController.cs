@@ -31,38 +31,31 @@ namespace Tasks.Backend.Controllers
             return Ok();
         }
 
-        //[HttpGet("{id}")]
-        //public IActionResult GetById(int id)
-        //{
-        //    var task = _context.Tasks.Find(id);
-        //    if (task == null) return NotFound();
-        //    return Ok(task);
-        //}
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var task = await _taskItemService.GetTaskItemByIdAsync(id);
+            if (task == null) return NotFound();
 
-        //[HttpPut("{id}")]
-        //public IActionResult Update(int id, TaskItem updatedTask)
-        //{
-        //    var task = _context.Tasks.Find(id);
-        //    if (task == null) return NotFound();
+            return Ok(task);
+        }
 
-        //    task.Title = updatedTask.Title;
-        //    task.Description = updatedTask.Description;
-        //    task.DueDate = updatedTask.DueDate;
-        //    task.IsCompleted = updatedTask.IsCompleted;
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, CreateTaskItemDTO updatedTask)
+        {
+            var task = await _taskItemService.UpdateTaskItemAsync(id, updatedTask);
+            if (!task) return NotFound();
 
-        //    _context.SaveChanges();
-        //    return NoContent();
-        //}
+            return NoContent();
+        }
 
-        //[HttpDelete("{id}")]
-        //public IActionResult Delete(int id)
-        //{
-        //    var task = _context.Tasks.Find(id);
-        //    if (task == null) return NotFound();
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var task = await _taskItemService.DeleteTaskItemAsync(id);
+            if (!task) return NotFound();
 
-        //    _context.Tasks.Remove(task);
-        //    _context.SaveChanges();
-        //    return NoContent();
-        //}
+            return NoContent();
+        }
     }
 }
