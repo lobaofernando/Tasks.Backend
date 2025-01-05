@@ -28,7 +28,7 @@ namespace Tasks.Backend.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById(int id)
         {
-            var user = await _userService.GetUserById(id);
+            var user = await _userService.GetUserByIdAsync(id);
             if (user == null) return NotFound(new { message = "Usuário não encontrado." });
 
             return Ok(user);
@@ -43,13 +43,13 @@ namespace Tasks.Backend.Controllers
                 return BadRequest(ModelState);
             }
 
-            var existingUser = await _userService.ExistingUser(user.Email);
+            var existingUser = await _userService.IsEmailInUse(user.Email);
             if (existingUser)
             {
                 return Conflict(new { message = "O e-mail já está em uso." });
             }
 
-            if (_userService.CreateUser(user) == null)
+            if (await _userService.CreateUserAsync(user) == null)
             {
                 return StatusCode(500, new {message = "Erro na criação do usuário" });
             }
@@ -66,19 +66,19 @@ namespace Tasks.Backend.Controllers
                 return BadRequest(new { message = "O ID do usuário não corresponde." });
             }
 
-            if (await _userService.ExistingUser(updatedUser.Email))
+            if (await _userService.IsEmailInUse(updatedUser.Email))
             {
                 return Conflict("E-mail já cadastrado");
             }
 
-            var user = _userService.UpdateUser(id, updatedUser);
+            var user = _userService.UpdateUserAsync(id, updatedUser);
 
             if (user == null)
             {
                 return NotFound(new { message = "Usuário não encontrado." });
             }
 
-            return Ok();
+            return NoContent();
         }
 
         // DELETE: api/User/{id}

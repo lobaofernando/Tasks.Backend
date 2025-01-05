@@ -24,7 +24,7 @@ namespace Tasks.Backend.Services
             return _mapper.Map<List<UserDTO>>(users);
         }
 
-        public async Task<UserDTO> GetUserById(int id)
+        public async Task<UserDTO> GetUserByIdAsync(int id)
         {
             var user = await _context.Users.FindAsync(id);
             if (user == null) return null;
@@ -32,7 +32,7 @@ namespace Tasks.Backend.Services
             return _mapper.Map<UserDTO>(user);
         }
 
-        public async Task<bool> ExistingUser(string email)
+        public async Task<bool> IsEmailInUse(string email)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
 
@@ -41,7 +41,7 @@ namespace Tasks.Backend.Services
             return true;
         }
 
-        public async Task<UserDTO> CreateUser(CreateUserDTO user)
+        public async Task<UserDTO> CreateUserAsync(CreateUserDTO user)
         {
             _context.Users.Add(_mapper.Map<User>(user));
             await _context.SaveChangesAsync();
@@ -49,7 +49,7 @@ namespace Tasks.Backend.Services
             return _mapper.Map<UserDTO>(user);
         }
 
-        public async Task<UserDTO?> UpdateUser(int id, UserDTO updateUser)
+        public async Task<UserDTO?> UpdateUserAsync(int id, UserDTO updateUser)
         {
             var user = await _context.Users.FindAsync(id);
             if (user == null)
