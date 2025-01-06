@@ -11,6 +11,14 @@ namespace Tasks.Backend.Utils.Mapper
             CreateMap<TaskItem, TaskItemDTO>();
 
             CreateMap<TaskItemDTO, TaskItem>();
+
+            CreateMap<CreateTaskItemDTO, TaskItem>();
+            
+            CreateMap<TaskItem, CreateTaskItemDTO>();
+
+            CreateMap<CreateTaskItemDTO, TaskItemDTO>();
+
+            CreateMap<TaskItemDTO, CreateTaskItemDTO>();
         }
     }
 }

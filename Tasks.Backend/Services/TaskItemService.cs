@@ -42,6 +42,9 @@ namespace Tasks.Backend.Services
         public async Task<bool> CreateTaskItemAsync(CreateTaskItemDTO taskItemDTO)
         {
             var taskItem = _mapper.Map<TaskItem>(taskItemDTO);
+            var user = await _context.Users.FindAsync(taskItem.UserId);
+
+            if (user == null) return false;
 
             try
             {
@@ -58,6 +61,10 @@ namespace Tasks.Backend.Services
 
         public async Task<bool> UpdateTaskItemAsync(int id, CreateTaskItemDTO taskItemDTO)
         {
+            // verificando se usuário existe
+            var user = await _context.Users.FindAsync(taskItemDTO.UserId);
+            if (user == null) return false;
+
             var taskItem = await _context.Tasks.FindAsync(id);
             if (taskItem == null) return false;
 
@@ -65,6 +72,8 @@ namespace Tasks.Backend.Services
             taskItem.Description = taskItemDTO.Description;
             taskItem.DueDate = taskItemDTO.DueDate;
             taskItem.IsCompleted = taskItemDTO.IsCompleted;
+            taskItem.UserId = taskItemDTO.UserId;
+
 
             _context.Entry(taskItem).State = EntityState.Modified;
             await _context.SaveChangesAsync();

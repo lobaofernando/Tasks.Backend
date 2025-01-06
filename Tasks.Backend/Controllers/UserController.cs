@@ -54,7 +54,7 @@ namespace Tasks.Backend.Controllers
                 return StatusCode(500, new {message = "Erro na criação do usuário" });
             }
 
-            return CreatedAtAction(nameof(GetUserById), user);
+            return Ok();
         }
 
         // PUT: api/User/{id}

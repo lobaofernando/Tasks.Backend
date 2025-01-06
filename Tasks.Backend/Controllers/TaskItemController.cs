@@ -16,9 +16,9 @@ namespace Tasks.Backend.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var tasks = _taskItemService.GetAllTaskItensAsync();
+            var tasks = await _taskItemService.GetAllTaskItensAsync();
 
             return Ok(tasks);
         }
