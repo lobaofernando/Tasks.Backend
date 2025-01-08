@@ -32,6 +32,14 @@ namespace Tasks.Backend.Services
             return _mapper.Map<UserDTO>(user);
         }
 
+        public async Task<UserDTO?> GetUserByIdEmailAsync(string email)
+        {
+            var user = await _context.Users.FindAsync(email);
+            if (user == null) return null;
+
+            return _mapper.Map<UserDTO>(user);
+        }
+
         public async Task<bool> IsEmailInUse(string email)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
