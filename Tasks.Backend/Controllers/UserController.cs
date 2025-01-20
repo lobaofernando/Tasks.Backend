@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Tasks.Backend.DTOs;
 using Tasks.Backend.Services;
 
@@ -17,6 +18,7 @@ namespace Tasks.Backend.Controllers
 
         // GET: api/User
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAllUsers()
         {
             var users = await _userService.GetAllUsersAsync();

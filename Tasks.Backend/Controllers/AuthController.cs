@@ -19,6 +19,7 @@ namespace Tasks.Backend.Controllers
         public async Task<IActionResult> Login(LoginDTO loginDTO)
         {
             var loginResponse = await _authService.Login(loginDTO);
+
             if (loginResponse == null) return Unauthorized("Usuário não encontrado ou senha incorreta");
 
             return Ok(loginResponse);
